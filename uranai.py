@@ -236,31 +236,50 @@ def run_chat(chat = chat, start='占いするよ', **kw):
     display_bot(start)
 
 # フレーム 状態をもつ辞書
-# 'name', 'birthday', 'asking'
+#'季節','気分', 'asking'
 frame = {}
 
-def myuranai(input_text):
+def uranai(input_text):
   global frame # 外部の状態を参照する
   if 'asking' in frame:  # asking から更新する
     frame[frame['asking']] = input_text
     del frame['asking']
 
-  if 'name' not in frame:
-    frame['asking'] = 'name' # 名前をたずねる  
-    return 'あなたの名前は？'
+  if '季節' not in frame:
+    frame['asking'] ='季節'# 季節をたずねる  
+    return '今の季節は？'
 
-  if 'name' in frame and 'birthday' not in frame:
-    frame['asking'] = 'birthday' # 誕生日をたずねる    
-    return 'あなたの誕生日は？'
+  if '季節' in frame and '気分' not in frame:
+    frame['asking'] = '気分' # 気分をたずねる    
+    return '今の気分は？'
 
-  if 'name' in frame and 'birthday' in frame:
+  if '季節' in frame and '気分' in frame:
     # 占います
-    number = hash(frame['name']+frame['birthday']) % 10
-    if number > 5:
-      return 'あなたの運勢は大吉'
-    return 'あなたの運勢は吉'
-
+    number = hash(frame['季節']+frame['気分']) % 12
+    if number == 0:
+      return 'ラッキースイーツは抹茶パフェ'
+    elif number == 1:
+      return 'ラッキースイーツは抹茶わらび餅'
+    elif number == 2:
+      return 'ラッキースイーツは抹茶テリーヌ'
+    elif number == 3:
+      return 'ラッキースイーツは抹茶ティラミス'
+    elif number == 4:
+      return 'ラッキースイーツは抹茶クレープ'
+    elif number == 5:
+      return 'ラッキースイーツは抹茶プリン'
+    elif number == 6:
+      return 'ラッキースイーツは抹茶アフォガード'
+    elif number == 7:
+      return 'ラッキースイーツは抹茶ロールケーキ'
+    elif number == 8:
+      return 'ラッキースイーツは抹茶かき氷'
+    elif number == 9:
+      return 'ラッキースイーツは抹茶モンブラン'
+    elif number == 10:
+      return 'ラッキースイーツは7段階の濃さが選べる抹茶ジェラート'
+    else:
+      return 'ラッキースイーツは抹茶大福'
   return output_text
 
-def start():
-  run_chat(chat=myuranai)    
+run_chat(chat=uranai)
